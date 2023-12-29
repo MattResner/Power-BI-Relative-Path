@@ -1,6 +1,10 @@
 let
    //This solution uses relative path and query functions. Some documentation is available at https://learn.microsoft.com/en-us/powerquery-m/web-contents
-   // 
+   
+    StartYear = Number.ToText(Date.Year(Date.AddYears(DateTime.LocalNow(),-4))),
+    EndYear = Number.ToText(Date.Year((DateTime.LocalNow()))),
+    YourAPIKey = "", //Generate and place your key here https://data.bls.gov/registrationEngine/registerkey
+   
    #"BaseURL" = "https://api.bls.gov/publicAPI/v2", //This is the URL that will be tested for connection that makes refreshable services for API data possible
    #"CPI_API_Source"="CUSR0000SA0", //This is the named dataset for the CPI data we want (Consumer Price Index)
     Source = Json.Document(
@@ -12,10 +16,10 @@ let
                 //contain our named dataset for the CPI API which we defined above
                 Query = //use the query function to input the various parameter names for the API we are workinig with
                     [
-                            registrationkey= #"Current API Key", // This is a paramater that holds the API key we generate at https://data.bls.gov/registrationEngine/registerkey
+                            registrationkey= YourAPIKey, // This is a paramater that holds the API key we generate at https://data.bls.gov/registrationEngine/registerkey
                             catalog="true",
-                            startyear=#"Start Year", // a calculated record with the syntax = Number.ToText(Date.Year(Date.AddYears(DateTime.LocalNow(),-4)))
-                            endyear=#"End Year", // a calculated record with the syntax = Number.ToText(Date.Year((DateTime.LocalNow())))
+                            startyear=StartYear, // a calculated record with the syntax = Number.ToText(Date.Year(Date.AddYears(DateTime.LocalNow(),-4)))
+                            endyear=EndYear, // a calculated record with the syntax = Number.ToText(Date.Year((DateTime.LocalNow())))
                             calculations="true"
                     ]
 
