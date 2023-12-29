@@ -6,13 +6,13 @@ Relative Path, along with Query are options within the [Web.Contents function](h
 
 ![image](https://github.com/MattResner/Power-BI-Relative-Path/assets/123479836/ba5bd726-dab3-4105-b7cb-ff6e8440f2f9)
 
-Relative path fixes this problem by substituting a base url (instead of the entire call) for the connectiveity test run in Power BI Services. When that test succeeds the rest of the syntax is run. The Query option helps organize our API call and dynamically set named paramaters such as calculated dates, optional arguments etc. 
+Relative path fixes this problem by substituting a base url (instead of the entire call) for the connectivity test run in Power BI Services. When that test succeeds the rest of the syntax is run. The Query option helps organize our API call and dynamically set named parameters such as calculated dates, optional arguments etc. 
 
 # Report Overview
 
 The Power Query M code in this Repository is designed to retrieve Consumer Price Index (CPI) data from the Bureau of Labor Statistics (BLS) API but this method will work for any public API with a user key. 
 
-It fetches data for a time period specified in by the query paramaters and performs necessary transformations to present the data in a tabular format that contains CPI data with columns for year, period, month, latest values, and percentage changes for 1-month, 3-month, 6-month, and 12-month periods.
+It fetches data for a time period specified in by the query parameters and performs necessary transformations to present the data in a tabular format that contains CPI data with columns for year, period, month, latest values, and percentage changes for 1-month, 3-month, 6-month, and 12-month periods.
 
 We can then take the resulting tabular data and create a dashboard like this:
 
@@ -22,11 +22,11 @@ We can then take the resulting tabular data and create a dashboard like this:
 # Getting Started
 To use this code in your own Power BI Desktop file, follow these steps:
 
-1. Copy the syntax in [M-Code Relative Path Solution for Consumer Price Index](https://github.com/MattResner/Power-BI-Relative-Path/blob/6669b2e8165ddea271701217d208c3df2450281c/M-Code%20Relative%20Path%20Solution%20for%20Consumer%20Price%20Index)
-2. API Key: Obtain an API key from [BLS Registration](https://data.bls.gov/registrationEngine/) and input your key at the top "Current API Key" in the code with your actual key .
+1. Copy the syntax in [M-Code Relative Path Solution for Consumer Price Index](https://github.com/MattResner/Power-BI-Relative-Path/blob/6669b2e8165ddea271701217d208c3df2450281c/M-Code%20Relative%20Path%20Solution%20for%20Consumer%20Price%20Index) into a blank query in your own Power Query window within Power BI Desktop.
+2. API Key: Obtain an API key from [BLS Registration](https://data.bls.gov/registrationEngine/) and input your key at the top "Current API Key" in the code with your actual key.
    ![image](https://github.com/MattResner/Power-BI-Relative-Path/assets/123479836/328f3d56-0a6c-4802-b63a-d7c4db31b803)
-3. Specify a start or end year using the paramaters or years as text. i.e. "2023"
+3. Specify a start or end year using the parameters or years as text. i.e. "2023".
 
-### Congrats! You now have a functional CPI dataset! You can leverage this method for many public APIs by replacing the named paramaters in the call with the components of the API in question. 
+### Congrats! You now have a functional CPI dataset! You can leverage this method for many public APIs by replacing the named parameters in the call with the components of the API in question. 
 
 
