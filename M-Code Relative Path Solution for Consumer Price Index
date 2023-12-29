@@ -1,0 +1,46 @@
+let
+   //This solution uses relative path and query functions. Some documentation is available at https://learn.microsoft.com/en-us/powerquery-m/web-contents
+   // 
+   #"BaseURL" = "https://api.bls.gov/publicAPI/v2", //This is the URL that will be tested for connection that makes refreshable services for API data possible
+   #"CPI_API_Source"="CUSR0000SA0", //This is the named dataset for the CPI data we want (Consumer Price Index)
+    Source = Json.Document(
+
+        Web.Contents(
+            #"BaseURL",
+            [
+                RelativePath = "/timeseries/data/" & #"CPI_API_Source", //relative path is the next part of the url after the base url and will
+                //contain our named dataset for the CPI API which we defined above
+                Query = //use the query function to input the various parameter names for the API we are workinig with
+                    [
+                            registrationkey= #"Current API Key",
+                            catalog="true",
+                            startyear=#"Start Year",
+                            endyear=#"End Year",
+                            calculations="true"
+                    ]
+
+
+            ]
+        )
+    ),
+
+// Defauly API URL to Duplicate: https://api.bls.gov/publicAPI/v2/timeseries/data/CUSR0000SA0?registrationkey=&af702b474c8842cebf71a742d30d9fb1&20catalog=true&startyear=2019&&endyear=2023&calculations=true
+
+    Results = Source[Results],
+    series = Results[series],
+    series1 = series{0},
+    data = series1[data],
+    #"Converted to Table" = Table.FromList(data, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", {"year", "period", "periodName", "latest", "value", "footnotes", "calculations"}, {"Column1.year", "Column1.period", "Column1.periodName", "Column1.latest", "Column1.value", "Column1.footnotes", "Column1.calculations"}),
+    #"Expanded Column1.calculations" = Table.ExpandRecordColumn(#"Expanded Column1", "Column1.calculations", {"net_changes", "pct_changes"}, {"Column1.calculations.net_changes", "Column1.calculations.pct_changes"}),
+    #"Expanded Column1.calculations.pct_changes" = Table.ExpandRecordColumn(#"Expanded Column1.calculations", "Column1.calculations.pct_changes", {"1", "3", "6", "12"}, {"Column1.calculations.pct_changes.1", "Column1.calculations.pct_changes.3", "Column1.calculations.pct_changes.6", "Column1.calculations.pct_changes.12"}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Column1.calculations.pct_changes",{{"Column1.value", type number}, {"Column1.calculations.pct_changes.1", type number}, {"Column1.calculations.pct_changes.3", type number}, {"Column1.calculations.pct_changes.6", type number}, {"Column1.calculations.pct_changes.12", type number}, {"Column1.latest", type text}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Column1.periodName", "Month"}, {"Column1.latest", "Latest"}, {"Column1.value", "Values"}}),
+    #"Expanded Column1.footnotes" = Table.ExpandListColumn(#"Renamed Columns", "Column1.footnotes"),
+    #"Removed Columns" = Table.RemoveColumns(#"Expanded Column1.footnotes",{"Column1.footnotes", "Column1.calculations.net_changes"}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"Column1.year", type date}}),
+    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"Column1.year", "Year"}, {"Column1.calculations.pct_changes.1", "1-Month % Change"}, {"Column1.calculations.pct_changes.3", "3-Month % Change"}, {"Column1.calculations.pct_changes.6", "6-Month % Change"}, {"Column1.calculations.pct_changes.12", "12-Month % Change"}}),
+    #"Unpivoted Columns" = Table.UnpivotOtherColumns(#"Renamed Columns1", {"Year", "Column1.period", "Month", "Latest"}, "Attribute", "Value"),
+    #"Renamed Columns2" = Table.RenameColumns(#"Unpivoted Columns",{{"Column1.period", "Period"}})
+in
+    #"Renamed Columns2"
