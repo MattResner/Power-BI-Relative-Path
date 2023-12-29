@@ -12,10 +12,10 @@ let
                 //contain our named dataset for the CPI API which we defined above
                 Query = //use the query function to input the various parameter names for the API we are workinig with
                     [
-                            registrationkey= #"Current API Key",
+                            registrationkey= #"Current API Key", // This is a paramater that holds the API key we generate at https://data.bls.gov/registrationEngine/registerkey
                             catalog="true",
-                            startyear=#"Start Year",
-                            endyear=#"End Year",
+                            startyear=#"Start Year", // a calculated record with the syntax = Number.ToText(Date.Year(Date.AddYears(DateTime.LocalNow(),-4)))
+                            endyear=#"End Year", // a calculated record with the syntax = Number.ToText(Date.Year((DateTime.LocalNow())))
                             calculations="true"
                     ]
 
@@ -24,7 +24,7 @@ let
         )
     ),
 
-// Defauly API URL to Duplicate: https://api.bls.gov/publicAPI/v2/timeseries/data/CUSR0000SA0?registrationkey=&af702b474c8842cebf71a742d30d9fb1&20catalog=true&startyear=2019&&endyear=2023&calculations=true
+// Default API URL to Duplicate: https://api.bls.gov/publicAPI/v2/timeseries/data/CUSR0000SA0?registrationkey=&yourkey&20catalog=true&startyear=2019&&endyear=2023&calculations=true
 
     Results = Source[Results],
     series = Results[series],
