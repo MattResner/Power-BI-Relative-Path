@@ -14,10 +14,9 @@ The Power Query M code in this Repository is designed to retrieve Consumer Price
 
 It fetches data for a time period specified in by the query parameters and performs necessary transformations to present the data in a tabular format that contains CPI data with columns for year, period, month, latest values, and percentage changes for 1-month, 3-month, 6-month, and 12-month periods.
 
-We can then take the resulting tabular data and create a dashboard like this:
+We can then take the resulting tabular data and create the dashboard seen below. If you have a Power BI License click on the image below to see the live report. 
 
-![image](https://github.com/MattResner/Power-BI-Relative-Path/assets/123479836/45ed5a18-c2fc-487b-b740-f5d2e802456f)
-
+[<img src="https://github.com/MattResner/Power-BI-Relative-Path/assets/123479836/45ed5a18-c2fc-487b-b740-f5d2e802456f">](https://app.powerbi.com/reportEmbed?reportId=fe372236-e185-4343-ae30-a2eb1d6b95d8&autoAuth=true&ctid=464e15ea-9493-4708-95c2-66f24b51aef9)
 
 # Getting Started
 To use this code in your own Power BI Desktop file, follow these steps:
@@ -29,6 +28,4 @@ To use this code in your own Power BI Desktop file, follow these steps:
 
 ### Congrats! You now have a functional CPI dataset! You can leverage this method for many public APIs by replacing the named parameters in the call with the components of the API in question. 
 
-
-<iframe title="Consumer Price Index Relative Path" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=fe372236-e185-4343-ae30-a2eb1d6b95d8&autoAuth=true&ctid=464e15ea-9493-4708-95c2-66f24b51aef9" frameborder="0" allowFullScreen="true"></iframe>
 
