@@ -30,3 +30,5 @@ To use this code in your own Power BI Desktop file, follow these steps:
 ### Congrats! You now have a functional CPI dataset! You can leverage this method for many public APIs by replacing the named parameters in the call with the components of the API in question. 
 
 
+<iframe title="Consumer Price Index Relative Path" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=fe372236-e185-4343-ae30-a2eb1d6b95d8&autoAuth=true&ctid=464e15ea-9493-4708-95c2-66f24b51aef9" frameborder="0" allowFullScreen="true"></iframe>
+
